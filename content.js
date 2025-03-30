@@ -36,7 +36,7 @@ function hideComments(settings) {
   function hideElementsByClass(className) {
     const elements = document.getElementsByClassName(className);
     for (let i = 0; i < elements.length; i++) {
-      elements[i].style.display = 'none';
+        elements[i].style.display = 'none';
     }
   }
   
@@ -50,16 +50,26 @@ function hideComments(settings) {
     xpathsToHide.push('/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[4]/div/div[1]/div[4]/div[8]'); // problem discussion section
   }
   
-  xpathsToHide.forEach(xpath => hideElementsByXPath(xpath));
-  
-  if (settings.hideStoryboard) {
-    hideElementsByClass('storyboard');
-  }
-  
   const observer = new MutationObserver(() => {
     xpathsToHide.forEach(xpath => hideElementsByXPath(xpath));
     if (settings.hideStoryboard) { hideElementsByClass('storyboard'); }
   });
   
-  observer.observe(document.body, { childList: true, subtree: true });
+  function startObservingAndHide() {
+    xpathsToHide.forEach(xpath => hideElementsByXPath(xpath));
+    
+    if (settings.hideStoryboard) {
+      hideElementsByClass('storyboard');
+    }
+    
+    if (document.body) {
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startObservingAndHide);
+  } else {
+    startObservingAndHide();
+  }
 }
