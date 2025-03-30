@@ -2,13 +2,17 @@
     "manifest_version": 3,
     "name": "LeetCode Focus",
     "version": "1.0",
-    "description": "Removes all distractions from LeetCode to help you stay focused. Redirects to the problems page when on the homepage, hides comments and discussions from problems and editorials.",
+    "description": "Removes all distractions from LeetCode to help you stay focused.",
+    "permissions": ["storage"],
+    "action": {
+      "default_popup": "popup.html"
+    },
     "content_scripts": [
       {
         "matches": ["*://leetcode.com/*"],
-        "js": ["content.js"]
+        "js": ["content.js"],
+        "run_at": "document_start"
       }
-    ],
-    "permissions": ["scripting"]
+    ]
   }
   
