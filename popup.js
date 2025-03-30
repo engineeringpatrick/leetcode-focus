@@ -1,4 +1,3 @@
-// Default settings
 const defaultSettings = {
   redirectHome: true,
   hideEditorialComments: true,
